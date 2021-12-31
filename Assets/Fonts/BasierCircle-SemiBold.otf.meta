@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 6e50b7303ac36fe45a1e0008d03a8d39
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Basier Circle
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: e1d612506cf5fdb4c961eac69765a524, type: 3}
+  - {fileID: 12800000, guid: 2beaa1c1b0ba3d94fac51e6216343b5e, type: 3}
+  - {fileID: 12800000, guid: 2148cb45b235d9943af51ba726325816, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
