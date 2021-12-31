@@ -39,7 +39,7 @@ public class SpacecraftScript : MonoBehaviour
 
   void FixedUpdate()
   {
-
+    // test
   }
 
   void UpdateUIElements()
