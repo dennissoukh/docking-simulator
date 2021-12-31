@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 146007985}
   - component: {fileID: 146007984}
   m_Layer: 0
-  m_Name: Angle
+  m_Name: YawAngle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -495,7 +495,7 @@ GameObject:
   - component: {fileID: 433510635}
   - component: {fileID: 433510634}
   m_Layer: 0
-  m_Name: Rate
+  m_Name: YawRateValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -629,7 +629,7 @@ GameObject:
   - component: {fileID: 435979978}
   - component: {fileID: 435979977}
   m_Layer: 0
-  m_Name: Angle
+  m_Name: PitchAngle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -763,7 +763,7 @@ GameObject:
   - component: {fileID: 478796644}
   - component: {fileID: 478796643}
   m_Layer: 0
-  m_Name: Angle
+  m_Name: RollAngle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -808,7 +808,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "15.0\xB0"
+  m_text: "36.0\xB0"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fe96a0fa56dcf09428971097e24b31bd, type: 2}
   m_sharedMaterial: {fileID: 1064576773687817373, guid: fe96a0fa56dcf09428971097e24b31bd, type: 2}
@@ -1012,7 +1012,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -2867,7 +2867,7 @@ GameObject:
   - component: {fileID: 1182354886}
   - component: {fileID: 1182354885}
   m_Layer: 0
-  m_Name: Rate
+  m_Name: PitchRateValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4227,7 +4227,7 @@ GameObject:
   - component: {fileID: 1583914891}
   - component: {fileID: 1583914890}
   m_Layer: 0
-  m_Name: Rate
+  m_Name: RollRateValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
