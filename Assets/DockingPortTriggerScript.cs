@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class DockingPortTriggerScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-    
-    void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("Has triggered");
+  // Start is called before the first frame update
+  void Start()
+  {
 
-        if (other.gameObject.name == "Spacecraft")
-        {
-            Debug.Log("Spacecraft has triggered");
-        }
+  }
+
+  void OnTriggerEnter(Collider other)
+  {
+    Debug.Log("Has triggered");
+
+    if (other.gameObject.name == "Spacecraft")
+    {
+      Debug.Log("Spacecraft has triggered");
     }
+  }
 }
