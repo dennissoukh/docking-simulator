@@ -1457,7 +1457,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Range Rate
+  m_text: Rate
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fe96a0fa56dcf09428971097e24b31bd, type: 2}
   m_sharedMaterial: {fileID: 1064576773687817373, guid: fe96a0fa56dcf09428971097e24b31bd, type: 2}
@@ -1664,7 +1664,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -1813,7 +1813,7 @@ GameObject:
   - component: {fileID: 744216919}
   - component: {fileID: 744216918}
   m_Layer: 0
-  m_Name: RangeValue1
+  m_Name: RangeRateValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2138,7 +2138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &929766876
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4067,7 +4067,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1496991788
 RectTransform:
   m_ObjectHideFlags: 0

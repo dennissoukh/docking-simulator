@@ -7,6 +7,7 @@ public class HUDHandler : MonoBehaviour
 {
   private GameObject spacecraft;
   private GameObject spacecraftGameObject;
+  private Rigidbody spacecraftRigidbody;
   private GameObject activeDockingPort;
   private TextMeshProUGUI range;
   private TextMeshProUGUI roll;
@@ -15,6 +16,7 @@ public class HUDHandler : MonoBehaviour
   private TextMeshProUGUI pitchRate;
   private TextMeshProUGUI yawRate;
   private TextMeshProUGUI yaw;
+  private TextMeshProUGUI rangeRate;
   private static Color blue;
   private static Color yellow;
   private static Color red;
@@ -24,6 +26,7 @@ public class HUDHandler : MonoBehaviour
   {
     spacecraft = GameObject.Find("Spacecraft");
     spacecraftGameObject = spacecraft.gameObject;
+    spacecraftRigidbody = spacecraft.GetComponent<Rigidbody>();
 
     activeDockingPort = GameObject.Find("04 (PMA) Pressurized Mating Adapter 2");
     range = GameObject.Find("RangeValue1").GetComponent<TextMeshProUGUI>();
@@ -36,6 +39,8 @@ public class HUDHandler : MonoBehaviour
 
     yaw = GameObject.Find("YawAngle").GetComponent<TextMeshProUGUI>();
     yawRate = GameObject.Find("YawRateValue").GetComponent<TextMeshProUGUI>();
+
+    rangeRate = GameObject.Find("RangeRateValue").GetComponent<TextMeshProUGUI>();
 
     blue = new Color32(36, 210, 253, 255);
     yellow = new Color32(255, 165, 0, 255);
@@ -65,6 +70,9 @@ public class HUDHandler : MonoBehaviour
 
     // HUD Element - Range to target object
     hudRangeToTarget();
+
+    // HUD Element - Range Rate
+    hudRangeRate();
   }
 
   private void hudRoll() {
@@ -76,7 +84,7 @@ public class HUDHandler : MonoBehaviour
   }
 
   private void hudRollRate() {
-    var dZ = spacecraftGameObject.transform.TransformDirection(spacecraft.GetComponent<Rigidbody>().angularVelocity).z * Mathf.Rad2Deg;
+    var dZ = spacecraftGameObject.transform.TransformDirection(spacecraftRigidbody.angularVelocity).z * Mathf.Rad2Deg;
 
     if (dZ >= 0.7 || dZ <= -0.7)
     {
@@ -105,7 +113,7 @@ public class HUDHandler : MonoBehaviour
   }
 
   private void hudPitchRate() {
-    var dX = spacecraftGameObject.transform.TransformDirection(spacecraft.GetComponent<Rigidbody>().angularVelocity).x * Mathf.Rad2Deg;
+    var dX = spacecraftGameObject.transform.TransformDirection(spacecraftRigidbody.angularVelocity).x * Mathf.Rad2Deg;
 
     if (dX >= 0.7 || dX <= -0.7)
     {
@@ -134,7 +142,7 @@ public class HUDHandler : MonoBehaviour
   }
 
   private void hudYawRate() {
-    var dY = spacecraftGameObject.transform.TransformDirection(spacecraft.GetComponent<Rigidbody>().angularVelocity).y * Mathf.Rad2Deg;
+    var dY = spacecraftGameObject.transform.TransformDirection(spacecraftRigidbody.angularVelocity).y * Mathf.Rad2Deg;
 
     if (dY >= 0.7 || dY <= -0.7)
     {
@@ -156,10 +164,17 @@ public class HUDHandler : MonoBehaviour
   }
 
   private void hudRangeToTarget() {
-    var r = range.GetComponent<TextMeshProUGUI>();
-    r.text = floatToStringRepresentation(
+    range.text = floatToStringRepresentation(
       Vector3.Distance(activeDockingPort.transform.position, spacecraft.transform.position) / 100,
       "m",
+      "F2"
+    );
+  }
+
+  private void hudRangeRate() {
+    rangeRate.text = floatToStringRepresentation(
+      spacecraftRigidbody.velocity.normalized.magnitude / 100,
+      "m/s",
       "F2"
     );
   }
