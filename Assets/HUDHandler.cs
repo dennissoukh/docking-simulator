@@ -17,6 +17,9 @@ public class HUDHandler : MonoBehaviour
   private TextMeshProUGUI yawRate;
   private TextMeshProUGUI yaw;
   private TextMeshProUGUI rangeRate;
+  private TextMeshProUGUI distanceX;
+  private TextMeshProUGUI distanceY;
+  private TextMeshProUGUI distanceZ;
   private static Color blue;
   private static Color yellow;
   private static Color red;
@@ -41,6 +44,10 @@ public class HUDHandler : MonoBehaviour
     yawRate = GameObject.Find("YawRateValue").GetComponent<TextMeshProUGUI>();
 
     rangeRate = GameObject.Find("RangeRateValue").GetComponent<TextMeshProUGUI>();
+
+    distanceX = GameObject.Find("DistanceXValue").GetComponent<TextMeshProUGUI>();
+    distanceY = GameObject.Find("DistanceYValue").GetComponent<TextMeshProUGUI>();
+    distanceZ = GameObject.Find("DistanceZValue").GetComponent<TextMeshProUGUI>();
 
     blue = new Color32(36, 210, 253, 255);
     yellow = new Color32(255, 165, 0, 255);
@@ -73,6 +80,9 @@ public class HUDHandler : MonoBehaviour
 
     // HUD Element - Range Rate
     hudRangeRate();
+
+    // HUD Element - Distance X, Y, Z
+    hudDistanceComponents();
   }
 
   private void hudRoll() {
@@ -172,24 +182,43 @@ public class HUDHandler : MonoBehaviour
   }
 
   private void hudRangeRate() {
+    var relativePortPosition = activeDockingPort.transform.position - spacecraft.transform.position;
+    var relativePortVelocity = Vector3.Project(spacecraftRigidbody.velocity, relativePortPosition);
+    var approachRate = (Vector3.Angle(relativePortPosition, spacecraftRigidbody.velocity) > 90 ? -1 : 1) * relativePortVelocity.magnitude;
+
     rangeRate.text = floatToStringRepresentation(
-      spacecraftRigidbody.velocity.normalized.magnitude / 100,
+      approachRate / 100,
       "m/s",
       "F2"
     );
   }
 
+  private void hudDistanceComponents() {
+    Vector3 relativeDockingPortPosition = spacecraft.transform.InverseTransformPoint(activeDockingPort.transform.position);
+
+    distanceX.text = floatToStringRepresentation(
+      (relativeDockingPortPosition.x / 100) * -1,
+      "m"
+    );
+
+    distanceY.text = floatToStringRepresentation(
+      (relativeDockingPortPosition.y / 100) * -1,
+      "m"
+    );
+
+    distanceZ.text = floatToStringRepresentation(
+      (relativeDockingPortPosition.z / 100) * -1,
+      "m"
+    );
+  }
+
   private static float WrapAngle(float angle)
   {
-    angle %= 360;
-    if (angle > 180)
-      return angle - 360;
-
-    return angle;
+    return angle > 180 ? angle - 360 : angle;
   }
 
   string floatToStringRepresentation(float f, string units, string places = "F1")
   {
-    return string.Format("{0}{1}", f.ToString(places), units);
+    return string.Format("{0} {1}", f.ToString(places), units);
   }
 }
