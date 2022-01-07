@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class HUDHandler : MonoBehaviour
 {
@@ -23,6 +24,17 @@ public class HUDHandler : MonoBehaviour
   private static Color blue;
   private static Color yellow;
   private static Color red;
+
+  private const float RateBarMaxAngle = 40;
+  private const float RollRateBarPositiveZeroAngle = 50;
+  private const float RollRateBarNegativeZeroAngle = 0 - RateBarMaxAngle;
+  private const float PitchRateBarPositiveZeroAngle = -50;
+  private const float PitchRateBarNegativeZeroAngle = -130;
+
+  private GameObject positiveRollRateBar;
+  private GameObject negativeRollRateBar;
+  private GameObject positivePitchRateBar;
+  private GameObject negativePitchRateBar;
 
   // Start is called before the first frame update
   void Start()
@@ -52,6 +64,11 @@ public class HUDHandler : MonoBehaviour
     blue = new Color32(36, 210, 253, 255);
     yellow = new Color32(255, 165, 0, 255);
     red = Color.red;
+
+    positiveRollRateBar = GameObject.Find("PositiveRollRateBar");
+    negativeRollRateBar = GameObject.Find("NegativeRollRateBar");
+    positivePitchRateBar = GameObject.Find("PositivePitchRateBar");
+    negativePitchRateBar = GameObject.Find("NegativePitchRateBar");
   }
 
   // Update is called once per frame
@@ -83,6 +100,18 @@ public class HUDHandler : MonoBehaviour
 
     // HUD Element - Distance X, Y, Z
     hudDistanceComponents();
+
+    // HUD Element - Positive roll rate bar
+    hudRollPositiveRateBar();
+
+    // HUD Element - Negative roll rate bar
+    hudRollNegativeRateBar();
+
+    // HUD Element - Positive pitch rate bar
+    hudPitchPositiveRateBar();
+
+    // HUD Element - Negative pitch rate bar
+    hudPitchNegativeRateBar();
   }
 
   private void hudRoll() {
@@ -182,9 +211,9 @@ public class HUDHandler : MonoBehaviour
   }
 
   private void hudRangeRate() {
-    var relativePortPosition = activeDockingPort.transform.position - spacecraft.transform.position;
-    var relativePortVelocity = Vector3.Project(spacecraftRigidbody.velocity, relativePortPosition);
-    var approachRate = (Vector3.Angle(relativePortPosition, spacecraftRigidbody.velocity) > 90 ? -1 : 1) * relativePortVelocity.magnitude;
+    Vector3 relativePortPosition = activeDockingPort.transform.position - spacecraft.transform.position;
+    Vector3 relativePortVelocity = Vector3.Project(spacecraftRigidbody.velocity, relativePortPosition);
+    float approachRate = (Vector3.Angle(relativePortPosition, spacecraftRigidbody.velocity) > 90 ? -1 : 1) * relativePortVelocity.magnitude;
 
     rangeRate.text = floatToStringRepresentation(
       approachRate / 100,
@@ -209,6 +238,120 @@ public class HUDHandler : MonoBehaviour
     distanceZ.text = floatToStringRepresentation(
       (relativeDockingPortPosition.z / 100) * -1,
       "m"
+    );
+  }
+
+  private void hudRollPositiveRateBar() {
+    float dZ = spacecraftGameObject.transform.TransformDirection(spacecraftRigidbody.angularVelocity).z * Mathf.Rad2Deg;
+
+    RectTransform rectTransform = positiveRollRateBar.GetComponent<RectTransform>();
+    RawImage rawImage = positiveRollRateBar.GetComponent<RawImage>();
+
+    if (dZ >= 0.7 || dZ <= -0.7)
+    {
+      rawImage.color = red;
+    }
+    else if (dZ >= 0.5 || dZ <= -0.5)
+    {
+      rawImage.color = yellow;
+    }
+    else if (dZ < 0.5 || dZ > 0.5)
+    {
+      rawImage.color = blue;
+    }
+
+    rectTransform.rotation = Quaternion.Euler(
+      0,
+      0,
+      Mathf.Max(
+        0,
+        RollRateBarPositiveZeroAngle + dZ * RateBarMaxAngle
+      )
+    );
+  }
+
+  private void hudRollNegativeRateBar() {
+    float dZ = spacecraftGameObject.transform.TransformDirection(spacecraftRigidbody.angularVelocity).z * Mathf.Rad2Deg;
+
+    RectTransform rectTransform = negativeRollRateBar.GetComponent<RectTransform>();
+    RawImage rawImage = negativeRollRateBar.GetComponent<RawImage>();
+
+    if (dZ >= 0.7 || dZ <= -0.7)
+    {
+      rawImage.color = red;
+    }
+    else if (dZ >= 0.5 || dZ <= -0.5)
+    {
+      rawImage.color = yellow;
+    }
+    else if (dZ < 0.5 || dZ > 0.5)
+    {
+      rawImage.color = blue;
+    }
+
+    rectTransform.rotation = Quaternion.Euler(
+      0,
+      0,
+      Mathf.Min(
+        0,
+        RollRateBarNegativeZeroAngle + dZ * RateBarMaxAngle
+      )
+    );
+  }
+
+  private void hudPitchPositiveRateBar() {
+    float dX = spacecraftGameObject.transform.TransformDirection(spacecraftRigidbody.angularVelocity).x * Mathf.Rad2Deg;
+    RectTransform rectTransform = positivePitchRateBar.GetComponent<RectTransform>();
+    RawImage rawImage = positivePitchRateBar.GetComponent<RawImage>();
+
+    if (dX >= 0.7 || dX <= -0.7)
+    {
+      rawImage.color = red;
+    }
+    else if (dX >= 0.5 || dX <= -0.5)
+    {
+      rawImage.color = yellow;
+    }
+    else if (dX < 0.5 || dX > 0.5)
+    {
+      rawImage.color = blue;
+    }
+
+    rectTransform.rotation = Quaternion.Euler(
+      0,
+      0,
+      Mathf.Max(
+        -90,
+        PitchRateBarPositiveZeroAngle + dX * RateBarMaxAngle
+      )
+    );
+  }
+
+  private void hudPitchNegativeRateBar() {
+    float dX = spacecraftGameObject.transform.TransformDirection(spacecraftRigidbody.angularVelocity).x * Mathf.Rad2Deg;
+    RectTransform rectTransform = negativePitchRateBar.GetComponent<RectTransform>();
+    RawImage rawImage = negativePitchRateBar.GetComponent<RawImage>();
+
+    if (dX >= 0.7 || dX <= -0.7)
+    {
+      rawImage.color = red;
+    }
+    else if (dX >= 0.5 || dX <= -0.5)
+    {
+      rawImage.color = yellow;
+    }
+    else if (dX < 0.5 || dX > 0.5)
+    {
+      rawImage.color = blue;
+    }
+
+    rectTransform.rotation = Quaternion.Euler(
+      0,
+      0,
+      Mathf.Min(
+        -92,
+        PitchRateBarNegativeZeroAngle + dX * RateBarMaxAngle
+      )
     );
   }
 
