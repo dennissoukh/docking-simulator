@@ -30,11 +30,15 @@ public class HUDHandler : MonoBehaviour
   private const float RollRateBarNegativeZeroAngle = 0 - RateBarMaxAngle;
   private const float PitchRateBarPositiveZeroAngle = -50;
   private const float PitchRateBarNegativeZeroAngle = -130;
+  private const float YawRateBarPositiveZeroAngle = 180;
+  private const float YawRateBarNegativeZeroAngle = -180 + RateBarMaxAngle;
 
   private GameObject positiveRollRateBar;
   private GameObject negativeRollRateBar;
   private GameObject positivePitchRateBar;
   private GameObject negativePitchRateBar;
+  private GameObject positiveYawRateBar;
+  private GameObject negativeYawRateBar;
 
   // Start is called before the first frame update
   void Start()
@@ -69,6 +73,8 @@ public class HUDHandler : MonoBehaviour
     negativeRollRateBar = GameObject.Find("NegativeRollRateBar");
     positivePitchRateBar = GameObject.Find("PositivePitchRateBar");
     negativePitchRateBar = GameObject.Find("NegativePitchRateBar");
+    positiveYawRateBar = GameObject.Find("PositiveYawRateBar");
+    negativeYawRateBar = GameObject.Find("NegativeYawRateBar");
   }
 
   // Update is called once per frame
@@ -112,6 +118,12 @@ public class HUDHandler : MonoBehaviour
 
     // HUD Element - Negative pitch rate bar
     hudPitchNegativeRateBar();
+
+    // HUD Element - Positive yaw rate bar
+    hudYawPositiveRateBar();
+
+    // HUD Element - Negative yaw rate bar
+    hudYawNegativeRateBar();
   }
 
   private void hudRoll() {
@@ -351,6 +363,62 @@ public class HUDHandler : MonoBehaviour
       Mathf.Min(
         -92,
         PitchRateBarNegativeZeroAngle + dX * RateBarMaxAngle
+      )
+    );
+  }
+
+  private void hudYawPositiveRateBar() {
+    float dY = spacecraftGameObject.transform.TransformDirection(spacecraftRigidbody.angularVelocity).y * Mathf.Rad2Deg;
+    RectTransform rectTransform = positiveYawRateBar.GetComponent<RectTransform>();
+    RawImage rawImage = positiveYawRateBar.GetComponent<RawImage>();
+
+    if (dY >= 0.7 || dY <= -0.7)
+    {
+      rawImage.color = red;
+    }
+    else if (dY >= 0.5 || dY <= -0.5)
+    {
+      rawImage.color = yellow;
+    }
+    else if (dY < 0.5 || dY > 0.5)
+    {
+      rawImage.color = blue;
+    }
+
+    rectTransform.rotation = Quaternion.Euler(
+      0,
+      0,
+      Mathf.Min(
+        -180,
+        YawRateBarPositiveZeroAngle + dY * RateBarMaxAngle
+      )
+    );
+  }
+
+  private void hudYawNegativeRateBar() {
+    float dY = spacecraftGameObject.transform.TransformDirection(spacecraftRigidbody.angularVelocity).y * Mathf.Rad2Deg;
+    RectTransform rectTransform = negativeYawRateBar.GetComponent<RectTransform>();
+    RawImage rawImage = negativeYawRateBar.GetComponent<RawImage>();
+
+    if (dY >= 0.7 || dY <= -0.7)
+    {
+      rawImage.color = red;
+    }
+    else if (dY >= 0.5 || dY <= -0.5)
+    {
+      rawImage.color = yellow;
+    }
+    else if (dY < 0.5 || dY > 0.5)
+    {
+      rawImage.color = blue;
+    }
+
+    rectTransform.rotation = Quaternion.Euler(
+      0,
+      0,
+      Mathf.Max(
+        -180,
+        YawRateBarNegativeZeroAngle + dY * RateBarMaxAngle
       )
     );
   }
