@@ -29,7 +29,7 @@ public class SpacecraftScript : MonoBehaviour
     mask = LayerMask.GetMask("Docking Port");
     SpacecraftRB = GetComponent<Rigidbody>();
     SpacecraftYaw = SpacecraftPitch = SpacecraftSpeed = 0;
-    ManeuverSpeedMultiplier = 45000f;
+    ManeuverSpeedMultiplier = 100000f;
     ForceMultiplier = 0.1f;
     Area = 5000f;
 

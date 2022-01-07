@@ -141,6 +141,15 @@ public class GameManagerScript : MonoBehaviour
     GameState = 0; // game is now playing
   }
 
+  // Continue game
+  public void Continue() {
+    StartCoroutine(TogglePause());
+  }
+
+  public void Quit() {
+    Application.Quit();
+  }
+
   //For if you want to go to the main menu
   void MainMenu()
   {
@@ -162,7 +171,7 @@ public class GameManagerScript : MonoBehaviour
   {
     GameState = 3; // Setting the game state to paused
     PauseMenuCanvas.SetActive(true); // Making the pause menu canvas visible
-                                     // Current Velocity and angular velocity are both stored for later resuming before setting them to zero
+    // Current Velocity and angular velocity are both stored for later resuming before setting them to zero
     SpacecraftVelocity = Spacecraft.GetComponent<Rigidbody>().velocity;
     SpacecraftAngularVelocity = Spacecraft.GetComponent<Rigidbody>().angularVelocity;
     Spacecraft.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -174,7 +183,7 @@ public class GameManagerScript : MonoBehaviour
   {
     GameState = 0; // Game state is set to playing
     PauseMenuCanvas.SetActive(false); // pause menu now invisible
-                                      //Constraints removed and velocity + angular velocty restored
+    //Constraints removed and velocity + angular velocty restored
     Spacecraft.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
     Spacecraft.GetComponent<Rigidbody>().angularVelocity = SpacecraftAngularVelocity;
     Spacecraft.GetComponent<Rigidbody>().velocity = SpacecraftVelocity;
