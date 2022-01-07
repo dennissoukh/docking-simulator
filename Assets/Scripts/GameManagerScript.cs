@@ -15,6 +15,7 @@ public class GameManagerScript : MonoBehaviour
   public static float TimeStart, BestTime;
   private bool CanPause;
   private Vector3 SpacecraftVelocity, SpacecraftAngularVelocity;
+  public static AudioSource dockingSuccessfulSound;
 
   // Start is called before the first frame update
   void Start()
@@ -31,6 +32,7 @@ public class GameManagerScript : MonoBehaviour
     EndGameCam = GameObject.Find("EndGameCamera");
     SpaceShuttle = GameObject.Find("space_shuttle");
     PauseMenuCanvas = GameObject.Find("PauseMenuCanvas");
+    dockingSuccessfulSound = GameObject.Find("DockingSuccessfulSound").GetComponent<AudioSource>();
 
     CanPause = true; //CanPause at start of game
     TimeStart = Time.time; // Start time recorded here
@@ -93,7 +95,11 @@ public class GameManagerScript : MonoBehaviour
 
   public static void SuccessfulDock()
   {
+    Debug.Log("SuccessfulDock");
     GameState = 1; //Game state set to Successful dock status screen
+
+    // Play docking sound
+    dockingSuccessfulSound.Play(1);
 
     //Dock status canvas and SuccessfulStatusText UI elements now visible
     DockStatusCanvas.SetActive(true);
